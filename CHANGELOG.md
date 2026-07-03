@@ -6,6 +6,10 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 
 ## [Unreleased]
 
+### Added
+- **Tài liệu kiến trúc** `docs/kien-truc.md`: sơ đồ Mermaid (kiến trúc H-P-D-I, luồng
+  DX-Ticket, luồng SSO), bảng dịch vụ/cổng/giấy phép, và 5 ảnh màn hình demo thật.
+
 ## [0.5.0] - 2026-07-03
 
 ### Added

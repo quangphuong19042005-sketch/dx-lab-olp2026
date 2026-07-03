@@ -2,9 +2,10 @@
 
 Bộ tài liệu định hướng và tham khảo cho cuộc thi. Đọc theo thứ tự từ trên xuống.
 
-## 0. Đề xuất dự án dự thi
+## 0. Dự án & Kiến trúc
 
 - [**DỰ ÁN — DX-Lab OSS**](du-an.md) ⭐ — Giải pháp đề xuất: tái hiện DX-OS bằng ngăn xếp 100% mã nguồn mở, giải quyết pain point thực tế của SME. Kiến trúc, ánh xạ công nghệ, lộ trình, chiến lược ghi điểm.
+- [**KIẾN TRÚC HỆ THỐNG**](kien-truc.md) 🏗️ — Sơ đồ kiến trúc (Mermaid), luồng DX-Ticket & SSO, bảng dịch vụ/cổng, ảnh màn hình demo.
 
 ## 1. Quy định & Đề bài
 

@@ -20,6 +20,7 @@ phần mềm nhưng nhân sự vẫn nhắn tin rải rác, báo cáo thủ côn
 từ đầu nguồn ("chống rác đầu vào — rác đầu ra").
 
 Chi tiết pain point & giải pháp: xem [docs/du-an.md](docs/du-an.md).
+Kiến trúc hệ thống & ảnh demo: xem [docs/kien-truc.md](docs/kien-truc.md).
 
 ## Kiến trúc H-P-D-I
 
