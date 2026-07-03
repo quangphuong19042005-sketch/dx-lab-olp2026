@@ -78,6 +78,25 @@ services:
     networks:
       - dxlab
 
+  # --- DX-Portal (tự viết) — Cổng thông tin nội bộ [H] (nguồn sự thật duy nhất) ---
+  dx-portal:
+    build: ./src/dx-portal
+    container_name: dxlab-dx-portal
+    restart: unless-stopped
+    environment:
+      DX_CORE_URL: http://dx-core:8000
+      NEXT_PUBLIC_METABASE_URL: http://localhost:${METABASE_PORT}/dashboard/2
+      NEXT_PUBLIC_KEYCLOAK_URL: http://localhost:${KEYCLOAK_PORT}
+      NEXT_PUBLIC_DX_CORE_URL: http://localhost:${DX_CORE_PORT}/docs
+      NEXT_PUBLIC_BASEROW_URL: http://localhost:${BASEROW_PORT}
+      TZ: ${TZ}
+    ports:
+      - "${DX_PORTAL_PORT}:3000"
+    depends_on:
+      - dx-core
+    networks:
+      - dxlab
+
   # --- [P] Baserow — Low-code DB / Form (điểm nhập liệu + Poka-yoke) ---
   # Ảnh all-in-one khá nặng (~1.5GB). Bật khi cần: docker compose up -d baserow
   baserow:

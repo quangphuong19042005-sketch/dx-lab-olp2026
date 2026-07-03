@@ -6,7 +6,13 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-07-03
+
 ### Added
+- **[H] DX-Portal (G2)** — cổng thông tin nội bộ (Next.js 14, tự viết): trang chủ
+  "nguồn sự thật duy nhất" gom nghiệp vụ + dashboard + công cụ; form gửi ticket
+  (proxy an toàn tới DX-Core, hiện thông điệp Poka-yoke thân thiện).
+- Luồng DX-Ticket khép kín, bấm được: Form → DX-Core → PostgreSQL → Metabase.
 - **[D] Metabase Dashboard (G2)** — BI đọc dữ liệu ticket từ PostgreSQL (SSOT):
   dashboard "DX-Ticket" với 7 biểu đồ (tổng ticket, quá hạn SLA, tỷ lệ hoàn thành,
   theo loại/trạng thái/ưu tiên, xu hướng theo ngày).
