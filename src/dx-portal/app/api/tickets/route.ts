@@ -1,10 +1,17 @@
 // SPDX-License-Identifier: MIT
 // Proxy phía máy chủ: chuyển tiếp form ticket tới DX-Core (tránh CORS, ẩn URL nội bộ).
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/lib/auth";
 
 const DX_CORE_URL = process.env.DX_CORE_URL || "http://localhost:8000";
 
 export async function POST(req: Request) {
+  // Chỉ người đã đăng nhập (SSO) mới được tạo ticket.
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ message: "Chưa xác thực." }, { status: 401 });
+  }
   let body: unknown;
   try {
     body = await req.json();

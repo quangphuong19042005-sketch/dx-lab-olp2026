@@ -25,6 +25,6 @@ async def send_alert(text: str) -> bool:
             )
             resp.raise_for_status()
         return True
-    except httpx.HTTPError as exc:  # không để lỗi kênh phụ làm hỏng luồng chính
+    except Exception as exc:  # kênh phụ: tuyệt đối không làm hỏng luồng chính
         log.warning("Gửi Telegram thất bại: %s", exc)
         return False

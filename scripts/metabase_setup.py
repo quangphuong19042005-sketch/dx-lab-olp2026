@@ -15,10 +15,18 @@ import urllib.error
 
 BASE = os.environ.get("METABASE_URL", "http://localhost:3001")
 ADMIN_EMAIL = os.environ.get("MB_ADMIN_EMAIL", "admin@dxlab.local")
-ADMIN_PASSWORD = os.environ.get("MB_ADMIN_PASSWORD", "DxLab#2026mb")
-PG_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "change_me_strong_password")
 PG_USER = os.environ.get("POSTGRES_USER", "dxlab")
 PG_DB = os.environ.get("POSTGRES_DB", "dxlab")
+
+# Bắt buộc lấy mật khẩu từ môi trường — KHÔNG hardcode trong repo công khai.
+ADMIN_PASSWORD = os.environ.get("MB_ADMIN_PASSWORD")
+PG_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
+if not ADMIN_PASSWORD or not PG_PASSWORD:
+    raise SystemExit(
+        "Thiếu biến môi trường. Hãy nạp .env trước khi chạy:\n"
+        "  set -a; source .env; set +a; python3 scripts/metabase_setup.py\n"
+        "(cần MB_ADMIN_PASSWORD và POSTGRES_PASSWORD)"
+    )
 
 
 def api(method, path, body=None, session=None):
@@ -152,7 +160,7 @@ def main():
     api("PUT", f"/api/dashboard/{dash_id}", {"dashcards": dashcards}, session=session)
 
     print(f"\n✅ HOÀN TẤT — Mở dashboard tại: {BASE}/dashboard/{dash_id}")
-    print(f"   Đăng nhập: {ADMIN_EMAIL} / {ADMIN_PASSWORD}")
+    print(f"   Đăng nhập: {ADMIN_EMAIL} (mật khẩu: xem MB_ADMIN_PASSWORD trong .env)")
 
 
 if __name__ == "__main__":

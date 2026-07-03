@@ -70,14 +70,27 @@ async def do_ingest() -> dict:
 
 @app.post("/ask", response_model=AskOut)
 async def ask(payload: AskIn) -> AskOut:
-    qvec = await llm.embed(payload.question)
-    hits = await store.search(qvec, limit=4)
+    try:
+        qvec = await llm.embed(payload.question)
+        hits = await store.search(qvec, limit=4)
+    except Exception as exc:  # lỗi mạng/quota/kho chưa sẵn sàng → thông báo mềm
+        log.warning("Lỗi truy vấn tri thức: %s", exc)
+        return AskOut(
+            answer="Trợ lý tạm thời bận (không truy vấn được tri thức). Vui lòng thử lại sau giây lát.",
+            sources=[], mode=settings.llm_mode)
+
     if not hits:
         return AskOut(
-            answer="Xin lỗi, kho tri thức chưa được nạp. Vui lòng chạy /ingest.",
+            answer="Xin lỗi, kho tri thức chưa được nạp. Vui lòng chạy POST /ingest.",
             sources=[], mode=settings.llm_mode)
 
     context = "\n---\n".join(h["payload"]["text"] for h in hits)
     sources = sorted({h["payload"]["source"] for h in hits})
-    answer = await llm.generate(_PROMPT.format(context=context, question=payload.question))
+    try:
+        answer = await llm.generate(_PROMPT.format(context=context, question=payload.question))
+    except Exception as exc:
+        log.warning("Lỗi sinh câu trả lời: %s", exc)
+        return AskOut(
+            answer="Trợ lý tạm thời bận (mô hình AI không phản hồi). Vui lòng thử lại.",
+            sources=sources, mode=settings.llm_mode)
     return AskOut(answer=answer, sources=sources, mode=settings.llm_mode)

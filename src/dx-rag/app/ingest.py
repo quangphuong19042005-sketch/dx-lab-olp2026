@@ -20,7 +20,8 @@ async def ingest() -> dict:
     pid = 0
     for fp in files:
         source = os.path.basename(fp)
-        text = open(fp, encoding="utf-8").read()
+        with open(fp, encoding="utf-8") as fh:
+            text = fh.read()
         for chunk in _chunks(text):
             vec = await llm.embed(chunk)
             dim = len(vec)
@@ -31,6 +32,7 @@ async def ingest() -> dict:
     if not points:
         return {"ingested": 0, "files": 0}
 
-    await store.ensure_collection(dim)
+    # Tạo lại collection để không sót điểm của lần nạp trước (tri thức lỗi thời).
+    await store.recreate_collection(dim)
     await store.upsert(points)
     return {"ingested": len(points), "files": len(files), "dim": dim}

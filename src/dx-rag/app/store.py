@@ -28,12 +28,22 @@ async def upsert(points: list[dict]) -> None:
 
 
 async def search(vector: list[float], limit: int = 4) -> list[dict]:
-    """Trả về top-k payload gần nhất."""
+    """Trả về top-k payload gần nhất. Kho chưa sẵn sàng → trả rỗng (không ném lỗi)."""
     async with httpx.AsyncClient(timeout=30) as c:
         r = await c.post(f"{_base}/collections/{_col}/points/search",
                          json={"vector": vector, "limit": limit, "with_payload": True})
+        if r.status_code == 404:  # collection chưa được tạo
+            return []
         r.raise_for_status()
         return r.json()["result"]
+
+
+async def recreate_collection(dim: int) -> None:
+    """Xóa và tạo lại collection — dùng khi ingest để tránh sót điểm cũ."""
+    async with httpx.AsyncClient(timeout=30) as c:
+        await c.delete(f"{_base}/collections/{_col}")
+        await c.put(f"{_base}/collections/{_col}",
+                    json={"vectors": {"size": dim, "distance": "Cosine"}})
 
 
 async def count() -> int:

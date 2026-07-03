@@ -45,4 +45,8 @@ async def generate(prompt: str) -> str:
         )
         r.raise_for_status()
         data = r.json()
-        return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+        # Gemini có thể chặn nội dung (safety) → không có candidates.
+        try:
+            return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+        except (KeyError, IndexError):
+            return "Xin lỗi, tôi chưa tạo được câu trả lời cho câu hỏi này."

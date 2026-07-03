@@ -1,10 +1,17 @@
 // SPDX-License-Identifier: MIT
 // Proxy phía máy chủ: chuyển câu hỏi tới DX-RAG (trợ lý AI nội bộ).
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/lib/auth";
 
 const DX_RAG_URL = process.env.DX_RAG_URL || "http://localhost:8001";
 
 export async function POST(req: Request) {
+  // Chỉ người đã đăng nhập (SSO) mới được hỏi trợ lý AI (chống lạm dụng quota).
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ message: "Chưa xác thực." }, { status: 401 });
+  }
   let body: unknown;
   try {
     body = await req.json();

@@ -4,6 +4,7 @@
 Luồng: biểu mẫu [P] → webhook → chuẩn hóa (Poka-yoke) → rule engine (phân công + SLA)
        → ghi PostgreSQL [D] → cảnh báo Telegram [H].
 """
+import html
 import logging
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
@@ -43,10 +44,11 @@ async def receive_ticket(payload: TicketIn) -> Ticket:
         payload.model_dump(mode="json"), assignee, priority.value, deadline
     )
 
+    # Escape các trường người dùng vì gửi Telegram ở chế độ parse_mode=HTML.
     await send_alert(
         f"🎫 <b>Ticket mới #{row['id']}</b>\n"
-        f"• {row['title']}\n"
-        f"• Khách: {row['customer_name']} ({row['customer_phone']})\n"
+        f"• {html.escape(row['title'])}\n"
+        f"• Khách: {html.escape(row['customer_name'])} ({html.escape(row['customer_phone'])})\n"
         f"• Ưu tiên: {priority.value} → giao <b>{assignee}</b>\n"
         f"• Hạn SLA: {deadline:%d/%m %H:%M}"
     )

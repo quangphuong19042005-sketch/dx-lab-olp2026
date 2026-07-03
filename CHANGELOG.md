@@ -6,6 +6,21 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 
 ## [Unreleased]
 
+### Security
+- **Backend chỉ bind loopback** (`127.0.0.1`) cho postgres/qdrant/dx-core/dx-rag — không
+  còn phơi API ghi dữ liệu & AI (không auth) ra LAN. Portal vẫn gọi qua docker network.
+- **Bảo vệ API proxy bằng session**: `/api/tickets`, `/api/assistant` trả 401 nếu chưa
+  đăng nhập (đóng lỗ "SSO chỉ chặn UI"; chống lạm dụng quota AI).
+- `metabase_setup.py` không còn hardcode/không in mật khẩu — bắt buộc lấy từ env.
+
+### Fixed
+- **dx-rag chống crash khi demo**: bọc try/except mọi call LLM/Qdrant trong `/ask`
+  (mạng/quota/timeout → thông báo mềm thay vì 500); xử lý Gemini trả `candidates` rỗng
+  (safety filter); `search` trả rỗng khi collection chưa tồn tại.
+- **dx-rag re-ingest** tạo lại collection → không sót tri thức lỗi thời.
+- **dx-core** escape HTML các trường người dùng trong cảnh báo Telegram (tránh vỡ parse);
+  `send_alert` best-effort tuyệt đối (không làm 500 sau khi ticket đã lưu).
+
 ### Added
 - **Tài liệu kiến trúc** `docs/kien-truc.md`: sơ đồ Mermaid (kiến trúc H-P-D-I, luồng
   DX-Ticket, luồng SSO), bảng dịch vụ/cổng/giấy phép, và 5 ảnh màn hình demo thật.
