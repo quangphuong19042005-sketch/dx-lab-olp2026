@@ -6,7 +6,15 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-07-03
+
 ### Added
+- **DX-RAG — Trợ lý AI nội bộ chống ảo giác [I]** (FastAPI): RAG bám tài liệu SOP,
+  hỗ trợ 2 backend (Gemini API mặc định / Ollama cục bộ) chuyển bằng `.env`; Qdrant
+  làm vector DB; chỉ trả lời theo tri thức nội bộ, từ chối bịa khi ngoài phạm vi.
+- Trang chat `/assistant` trong dx-portal + proxy an toàn tới DX-RAG.
+- Tài liệu tri thức mẫu (SOP tiếp nhận ticket, chính sách bảo hành/đổi trả).
+- Service `qdrant`, `dx-rag`, và `ollama` (profile `local-llm`) trong docker-compose.
 - **DX-Diag — Chẩn đoán độ trưởng thành HPDI** (route `/diag` trong dx-portal):
   khảo sát 12 câu trên 4 trục H-P-D-I, thuật toán chấm điểm, biểu đồ radar (SVG thuần)
   và khuyến nghị trục cần ưu tiên theo nguyên lý tiến hóa tuyến tính. Kiểm chứng bằng

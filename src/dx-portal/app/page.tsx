@@ -51,6 +51,13 @@ export default function Home() {
               <h3>Chẩn đoán trưởng thành số →</h3>
               <p>Tự "bắt mạch" tổ chức theo mô hình HPDI, nhận biểu đồ radar &amp; khuyến nghị.</p>
             </Link>
+
+            <Link className="card" href="/assistant">
+              <span className="tag">Trợ lý AI</span>
+              <div className="space-badges"><span className="badge i">[I] Intelligence</span></div>
+              <h3>Trợ lý AI nội bộ →</h3>
+              <p>Hỏi đáp quy trình, chính sách — trả lời bám tài liệu nội bộ, không bịa.</p>
+            </Link>
           </div>
 
           <div className="section-title">Công cụ hệ thống</div>

@@ -85,6 +85,7 @@ services:
     restart: unless-stopped
     environment:
       DX_CORE_URL: http://dx-core:8000
+      DX_RAG_URL: http://dx-rag:8001
       NEXT_PUBLIC_METABASE_URL: http://localhost:${METABASE_PORT}/dashboard/2
       NEXT_PUBLIC_KEYCLOAK_URL: http://localhost:${KEYCLOAK_PORT}
       NEXT_PUBLIC_DX_CORE_URL: http://localhost:${DX_CORE_PORT}/docs
@@ -134,9 +135,58 @@ services:
     networks:
       - dxlab
 
+  # --- [I] Qdrant — Cơ sở dữ liệu véc-tơ ---
+  qdrant:
+    image: qdrant/qdrant:v1.12.4
+    container_name: dxlab-qdrant
+    restart: unless-stopped
+    volumes:
+      - qdrant-data:/qdrant/storage
+    ports:
+      - "6333:6333"
+    networks:
+      - dxlab
+
+  # --- DX-RAG (tự viết) — Trợ lý AI nội bộ chống ảo giác [I] ---
+  dx-rag:
+    build: ./src/dx-rag
+    container_name: dxlab-dx-rag
+    restart: unless-stopped
+    environment:
+      LLM_MODE: ${LLM_MODE}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_CHAT_MODEL: ${GEMINI_CHAT_MODEL}
+      GEMINI_EMBED_MODEL: ${GEMINI_EMBED_MODEL}
+      OLLAMA_HOST: ${OLLAMA_HOST}
+      OLLAMA_MODEL: ${OLLAMA_MODEL}
+      OLLAMA_EMBED_MODEL: ${OLLAMA_EMBED_MODEL}
+      QDRANT_HOST: ${QDRANT_HOST}
+      TZ: ${TZ}
+    ports:
+      - "${DX_RAG_PORT}:8001"
+    depends_on:
+      - qdrant
+    networks:
+      - dxlab
+
+  # --- [I] Ollama — LLM cục bộ (tùy chọn, nặng máy). Bật: docker compose --profile local-llm up -d ---
+  ollama:
+    image: ollama/ollama:0.5.4
+    container_name: dxlab-ollama
+    profiles: ["local-llm"]
+    restart: unless-stopped
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - dxlab
+
 volumes:
   postgres-data:
   baserow-data:
+  qdrant-data:
+  ollama-data:
 
 networks:
   dxlab:

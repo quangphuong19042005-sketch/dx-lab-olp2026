@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: MIT
+[project]
+name = "dx-rag"
+version = "0.4.0"
+description = "DX-Lab OSS — Trợ lý AI RAG chống ảo giác [I] (Gemini API / Ollama)"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "httpx>=0.27",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["app"]
