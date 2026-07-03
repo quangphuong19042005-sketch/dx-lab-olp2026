@@ -1,18 +1,22 @@
 // SPDX-License-Identifier: MIT
 import Link from "next/link";
 import { links } from "./links";
+import { UserMenu } from "./UserMenu";
 
 export default function Home() {
   return (
     <>
       <header className="header">
         <div className="container">
-          <div className="brand">
-            <div className="logo">DX</div>
-            <div>
-              <h1>DX-Portal</h1>
-              <small>Nguồn sự thật duy nhất · DX-Lab OSS</small>
+          <div className="brand" style={{ justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div className="logo">DX</div>
+              <div>
+                <h1>DX-Portal</h1>
+                <small>Nguồn sự thật duy nhất · DX-Lab OSS</small>
+              </div>
             </div>
+            <UserMenu />
           </div>
           <div className="hero">
             <h2>Trung tâm điều hành doanh nghiệp số</h2>

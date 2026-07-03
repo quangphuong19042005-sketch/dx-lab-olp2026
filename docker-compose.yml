@@ -45,6 +45,12 @@ services:
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
       KC_HEALTH_ENABLED: "true"
+      # Cố định issuer = localhost:8080 (trình duyệt), cho phép backchannel động
+      # để container dx-portal gọi token qua keycloak:8080. Giải bài toán mạng Docker.
+      KC_HOSTNAME: http://localhost:${KEYCLOAK_PORT}
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
+      KC_HTTP_ENABLED: "true"
       TZ: ${TZ}
     volumes:
       - ./src/platforms/keycloak/realm:/opt/keycloak/data/import:ro
@@ -86,6 +92,12 @@ services:
     environment:
       DX_CORE_URL: http://dx-core:8000
       DX_RAG_URL: http://dx-rag:8001
+      NEXTAUTH_URL: http://localhost:${DX_PORTAL_PORT}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      KEYCLOAK_ID: ${KEYCLOAK_ID}
+      KEYCLOAK_SECRET: ${KEYCLOAK_SECRET}
+      KEYCLOAK_ISSUER: ${KEYCLOAK_ISSUER}
+      KEYCLOAK_WELLKNOWN: ${KEYCLOAK_WELLKNOWN}
       NEXT_PUBLIC_METABASE_URL: http://localhost:${METABASE_PORT}/dashboard/2
       NEXT_PUBLIC_KEYCLOAK_URL: http://localhost:${KEYCLOAK_PORT}
       NEXT_PUBLIC_DX_CORE_URL: http://localhost:${DX_CORE_PORT}/docs

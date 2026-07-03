@@ -6,6 +6,15 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-07-03
+
+### Added
+- **SSO thật (OIDC) cho DX-Portal ↔ Keycloak** [H]: bảo vệ toàn bộ trang qua middleware,
+  đăng nhập một lần, hiển thị người dùng + đăng xuất. Dùng next-auth (MIT).
+- Giải bài toán mạng Docker: cố định issuer `localhost:8080` + backchannel động để
+  container gọi token qua `keycloak:8080`. Kiểm chứng luồng đăng nhập đầy đủ bằng Chrome headless.
+- Tự động nạp tri thức dx-rag khi khởi động nếu kho trống.
+
 ## [0.4.0] - 2026-07-03
 
 ### Added

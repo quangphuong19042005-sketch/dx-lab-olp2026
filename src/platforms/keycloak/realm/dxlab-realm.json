@@ -11,6 +11,7 @@
       "enabled": true,
       "protocol": "openid-connect",
       "publicClient": false,
+      "secret": "dxlab-portal-secret-2026",
       "standardFlowEnabled": true,
       "redirectUris": ["http://localhost:3000/*"],
       "webOrigins": ["http://localhost:3000"]
