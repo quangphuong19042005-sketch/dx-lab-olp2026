@@ -14,12 +14,15 @@ vào **DX-Portal** — nguồn sự thật duy nhất — rồi thao tác trên 
 
 | Không gian | Vai trò | Thành phần |
 |-----------|---------|-----------|
-| **[H] Human** | Định danh tập trung, cổng thông tin, giao tiếp | Keycloak · **DX-Portal** (tự viết) |
-| **[P] Process** | Biểu mẫu, rào chắn Poka-yoke, tự động hóa luồng | **DX-Core** (tự viết) · Baserow · Node-RED |
+| **[H] Human** | Định danh tập trung (SSO), cổng thông tin nội bộ | Keycloak · **DX-Portal** (tự viết) |
+| **[P] Process** | Biểu mẫu, rào chắn Poka-yoke, phân công & SLA tự động | **DX-Core** (tự viết) · Baserow |
 | **[D] Data** | Nguồn sự thật duy nhất, dashboard thời gian thực | PostgreSQL · Metabase |
-| **[I] Intelligence** | Trợ lý AI bám tri thức nội bộ, chống ảo giác | **DX-RAG** (tự viết) · Qdrant · Gemini/Ollama |
+| **[I] Intelligence** | Trợ lý AI bám tri thức nội bộ, chống ảo giác | **DX-RAG** (tự viết) · Qdrant · Gemini API/Ollama |
 
 Thành phần đặc thù: **DX-Diag** — chẩn đoán độ trưởng thành HPDI (biểu đồ radar + khuyến nghị).
+
+> **Lộ trình mở rộng (chưa triển khai):** Nextcloud (lưu trữ P.A.R.A), Rocket.Chat (giao tiếp),
+> Node-RED (automation trực quan) — đã có trong thiết kế, sẽ bổ sung ở phiên bản sau.
 
 ---
 
@@ -37,7 +40,6 @@ flowchart TB
     subgraph P["[P] Process"]
         Core[DX-Core<br/>FastAPI — trục sự kiện]
         Baserow[Baserow<br/>low-code form]
-        NodeRED[Node-RED<br/>automation]
     end
 
     subgraph D["[D] Data"]
@@ -58,7 +60,7 @@ flowchart TB
 
     Core -->|ghi| PG
     Core -->|cảnh báo| Alert([Telegram])
-    Baserow -.webhook.-> Core
+    Baserow -.webhook: dự kiến.-> Core
     Metabase -->|đọc| PG
 
     RAG -->|tìm kiếm| Qdrant
@@ -131,15 +133,14 @@ sequenceDiagram
 |--------|------|-----------|-----------|:------:|
 | DX-Portal | 3000 | Next.js 14 + next-auth | MIT | ✅ |
 | DX-Core | 8000 | FastAPI (Python) | MIT | ✅ |
-| DX-RAG | 8001 | FastAPI + LlamaIndex-style RAG | MIT | ✅ |
+| DX-RAG | 8001 | FastAPI + Qdrant + Gemini/Ollama | MIT | ✅ |
 | DX-Diag | (trong Portal) | React (SVG radar) | MIT | ✅ |
 | Keycloak | 8080 | Java | Apache-2.0 | |
 | PostgreSQL | 5432 | C | PostgreSQL License | |
 | Metabase | 3001 | Clojure/Java | AGPL-3.0 | |
 | Qdrant | 6333 | Rust | Apache-2.0 | |
-| Baserow | 8085 | Python/Vue | MIT | |
-| Node-RED | 1880 | Node.js | Apache-2.0 | |
-| Ollama (tùy chọn) | 11434 | Go | MIT | |
+| Baserow (chạy, chưa đấu nối luồng) | 8085 | Python/Vue | MIT | |
+| Ollama (tùy chọn, profile `local-llm`) | 11434 | Go | MIT | |
 
 Chi tiết giấy phép: [THIRD_PARTY_LICENSES.md](../THIRD_PARTY_LICENSES.md).
 

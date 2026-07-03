@@ -7,19 +7,26 @@ với các thành phần này, do đó không phát sinh lây nhiễm giấy ph�
 Chúng tôi **không chỉnh sửa mã nguồn** của bất kỳ thành phần nào — chỉ dùng bản phát hành
 chính thức (upstream) kèm file cấu hình bên ngoài.
 
-| Thành phần | Vai trò trong DX-Lab | Giấy phép | OSI |
-|-----------|----------------------|-----------|-----|
-| Keycloak | [H] Định danh / SSO (OIDC) | Apache-2.0 | ✅ |
-| Nextcloud | [H] Lưu trữ P.A.R.A | AGPL-3.0 | ✅ |
-| Rocket.Chat | [H] Giao tiếp nội bộ | MIT | ✅ |
-| BookStack | [H] Wiki / SOP | MIT | ✅ |
-| Baserow | [P] Low-code DB / Form | MIT (core) | ✅ |
-| Node-RED | [P] Tự động hóa (iPaaS) | Apache-2.0 | ✅ |
-| PostgreSQL | [D] Nguồn sự thật duy nhất | PostgreSQL License | ✅ |
-| Metabase | [D] BI Dashboard | AGPL-3.0 | ✅ |
-| Ollama | [I] Chạy LLM cục bộ | MIT | ✅ |
-| Qdrant | [I] Cơ sở dữ liệu véc-tơ | Apache-2.0 | ✅ |
-| LlamaIndex | [I] Khung RAG (thư viện) | MIT | ✅ |
+## Đã triển khai (có trong `docker-compose.yml`)
+
+| Thành phần | Phiên bản | Vai trò trong DX-Lab | Giấy phép | OSI |
+|-----------|-----------|----------------------|-----------|-----|
+| Keycloak | 26.0 | [H] Định danh / SSO (OIDC) | Apache-2.0 | ✅ |
+| PostgreSQL | 16 | [D] Nguồn sự thật duy nhất | PostgreSQL License | ✅ |
+| Metabase | v0.51.8 | [D] BI Dashboard | AGPL-3.0 | ✅ |
+| Qdrant | v1.12.4 | [I] Cơ sở dữ liệu véc-tơ | Apache-2.0 | ✅ |
+| Baserow | 1.30.1 | [P] Low-code DB / Form | MIT (core) | ✅ |
+| Ollama (tùy chọn, profile `local-llm`) | 0.5.4 | [I] Chạy LLM cục bộ | MIT | ✅ |
+
+Thư viện đóng gói trong dịch vụ tự viết (khai báo tại `package.json` / `pyproject.toml`):
+Next.js, next-auth, React (MIT) · FastAPI, httpx, psycopg, pydantic (MIT/BSD/Apache) — đều OSI-approved.
+
+## Lộ trình mở rộng (CHƯA triển khai — định hướng kiến trúc)
+
+Các thành phần dưới đây nằm trong bản thiết kế (xem [docs/du-an.md](docs/du-an.md)) nhưng **chưa
+được tích hợp** vào bản hiện tại: **Nextcloud** (AGPL-3.0, lưu trữ P.A.R.A), **Rocket.Chat**
+(MIT, giao tiếp), **BookStack** (MIT, wiki/SOP), **Node-RED** (Apache-2.0, automation trực quan).
+Tất cả đều OSI-approved, sẽ bổ sung ở các phiên bản sau.
 
 ## Lưu ý về lựa chọn giấy phép
 

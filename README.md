@@ -26,12 +26,15 @@ Kiến trúc hệ thống & ảnh demo: xem [docs/kien-truc.md](docs/kien-truc.m
 
 | Không gian | Chức năng | Nền tảng nguồn mở | Thành phần tự viết |
 |-----------|-----------|-------------------|--------------------|
-| **[H] Human** | SSO, lưu trữ P.A.R.A, cổng thông tin, giao tiếp | Keycloak · Nextcloud · Rocket.Chat | **DX-Portal** |
-| **[P] Process** | Biểu mẫu low-code, Poka-yoke, tự động hóa | Baserow · Node-RED | **DX-Core** (trục sự kiện) |
+| **[H] Human** | SSO, cổng thông tin nội bộ | Keycloak | **DX-Portal** (Next.js) |
+| **[P] Process** | Biểu mẫu, Poka-yoke, phân công/SLA tự động | Baserow | **DX-Core** (trục sự kiện) |
 | **[D] Data** | Nguồn sự thật duy nhất, dashboard thời gian thực | PostgreSQL · Metabase | — |
-| **[I] Intelligence** | RAG chống ảo giác, tác tử tự hành | Ollama · Qdrant | **DX-RAG / DX-Agent** |
+| **[I] Intelligence** | RAG chống ảo giác | Qdrant · Gemini API / Ollama | **DX-RAG** |
 
 Thành phần đặc thù: **DX-Diag** — công cụ chẩn đoán độ trưởng thành số HPDI (DTI).
+
+> Lộ trình mở rộng (chưa triển khai): Nextcloud (lưu trữ P.A.R.A), Rocket.Chat (giao tiếp),
+> Node-RED (automation trực quan). Xem [docs/du-an.md](docs/du-an.md).
 
 ## Bắt đầu nhanh (Quickstart)
 
