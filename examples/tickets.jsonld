@@ -1,0 +1,56 @@
+{
+  "@context": {
+    "dx": "https://dxlab.opendata.vn/vocab#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Ticket": "dx:Ticket",
+    "title": "schema:name",
+    "category": "dx:category",
+    "priority": "dx:priority",
+    "status": "dx:status",
+    "assignee": "dx:assignedTeam",
+    "created_at": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "sla_deadline": {
+      "@id": "dx:slaDeadline",
+      "@type": "xsd:dateTime"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "dx:ticket/1",
+      "@type": "Ticket",
+      "title": "Máy lạnh phòng họp không chạy",
+      "category": "ky_thuat",
+      "priority": "cao",
+      "status": "moi",
+      "assignee": "to-ky-thuat",
+      "created_at": "2026-07-03T11:21:04.492119+07:00",
+      "sla_deadline": "2026-07-03T15:21:04.491912+07:00"
+    },
+    {
+      "@id": "dx:ticket/2",
+      "@type": "Ticket",
+      "title": "Sai hóa đơn tháng 6",
+      "category": "thanh_toan",
+      "priority": "trung_binh",
+      "status": "moi",
+      "assignee": "to-ke-toan",
+      "created_at": "2026-07-03T11:21:04.548217+07:00",
+      "sla_deadline": "2026-07-04T11:21:04.548053+07:00"
+    },
+    {
+      "@id": "dx:ticket/43",
+      "@type": "Ticket",
+      "title": "Đổi trả sản phẩm lỗi",
+      "category": "khac",
+      "priority": "thap",
+      "status": "hoan_thanh",
+      "assignee": "to-cskh",
+      "created_at": "2026-06-23T09:13:40.934668+07:00",
+      "sla_deadline": "2026-06-26T09:13:40.934668+07:00"
+    }
+  ]
+}

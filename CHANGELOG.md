@@ -6,6 +6,12 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 
 ## [Unreleased]
 
+### Added
+- **Dữ liệu mở liên kết [D]** (kế thừa OLP 2025) — DX-Core xuất ticket ra JSON-LD
+  (`@context` ánh xạ schema.org), CSV, và danh mục DCAT (W3C); **ẩn PII** (tên/SĐT).
+  Endpoint `/open-data/*`; lược đồ `schemas/ticket.schema.json` + `schemas/dx-context.jsonld`
+  + ví dụ `examples/tickets.jsonld`; thẻ "Cổng Dữ liệu mở" trong DX-Portal.
+
 ### Security
 - **Backend chỉ bind loopback** (`127.0.0.1`) cho postgres/qdrant/dx-core/dx-rag — không
   còn phơi API ghi dữ liệu & AI (không auth) ra LAN. Portal vẫn gọi qua docker network.

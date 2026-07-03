@@ -16,7 +16,7 @@ vào **DX-Portal** — nguồn sự thật duy nhất — rồi thao tác trên 
 |-----------|---------|-----------|
 | **[H] Human** | Định danh tập trung (SSO), cổng thông tin nội bộ | Keycloak · **DX-Portal** (tự viết) |
 | **[P] Process** | Biểu mẫu, rào chắn Poka-yoke, phân công & SLA tự động | **DX-Core** (tự viết) · Baserow |
-| **[D] Data** | Nguồn sự thật duy nhất, dashboard thời gian thực | PostgreSQL · Metabase |
+| **[D] Data** | Nguồn sự thật duy nhất, dashboard, **dữ liệu mở liên kết (JSON-LD/DCAT)** | PostgreSQL · Metabase · **DX-Core Open-Data** (tự viết) |
 | **[I] Intelligence** | Trợ lý AI bám tri thức nội bộ, chống ảo giác | **DX-RAG** (tự viết) · Qdrant · Gemini API/Ollama |
 
 Thành phần đặc thù: **DX-Diag** — chẩn đoán độ trưởng thành HPDI (biểu đồ radar + khuyến nghị).
@@ -143,6 +143,20 @@ sequenceDiagram
 | Ollama (tùy chọn, profile `local-llm`) | 11434 | Go | MIT | |
 
 Chi tiết giấy phép: [THIRD_PARTY_LICENSES.md](../THIRD_PARTY_LICENSES.md).
+
+### 5.1. Dữ liệu mở liên kết [D] (kế thừa OLP 2025)
+
+DX-Core xuất dữ liệu ticket ra định dạng mở, liên kết — **đã ẩn thông tin cá nhân** (tên/SĐT):
+
+| Endpoint | Định dạng | Mô tả |
+|----------|-----------|-------|
+| `GET /open-data/catalog.jsonld` | DCAT (JSON-LD) | Danh mục bộ dữ liệu (chuẩn W3C) |
+| `GET /open-data/tickets.jsonld` | JSON-LD | Ticket dạng đồ thị liên kết (`@context` ánh xạ schema.org) |
+| `GET /open-data/tickets.csv` | CSV | Bảng dữ liệu mở |
+| `GET /open-data/context.jsonld` | JSON-LD | Từ vựng (vocabulary) ánh xạ trường dữ liệu |
+
+Lược đồ & ví dụ: [`schemas/ticket.schema.json`](../schemas/ticket.schema.json),
+[`schemas/dx-context.jsonld`](../schemas/dx-context.jsonld), [`examples/tickets.jsonld`](../examples/tickets.jsonld).
 
 ---
 

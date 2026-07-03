@@ -8,8 +8,9 @@ import html
 import logging
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
-from fastapi import FastAPI
-from . import db, rules
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse, Response
+from . import db, opendata, rules
 from .models import Ticket, TicketIn
 from .notify import send_alert
 
@@ -30,6 +31,31 @@ app = FastAPI(title="DX-Core — Event Bus", version="0.2.0", lifespan=lifespan)
 @app.get("/health")
 async def health() -> dict:
     return {"status": "ok", "service": "dx-core"}
+
+
+@app.get("/open-data/catalog.jsonld", tags=["open-data"])
+async def od_catalog(request: Request) -> JSONResponse:
+    """Danh mục dữ liệu mở (DCAT)."""
+    base = str(request.base_url).rstrip("/")
+    return JSONResponse(opendata.dcat_catalog(base), media_type="application/ld+json")
+
+
+@app.get("/open-data/context.jsonld", tags=["open-data"])
+async def od_context() -> JSONResponse:
+    return JSONResponse({"@context": opendata.CONTEXT}, media_type="application/ld+json")
+
+
+@app.get("/open-data/tickets.jsonld", tags=["open-data"])
+async def od_tickets_jsonld() -> JSONResponse:
+    """Ticket dạng JSON-LD liên kết (đã ẩn PII)."""
+    rows = await db.list_public_tickets()
+    return JSONResponse(opendata.to_jsonld(rows), media_type="application/ld+json")
+
+
+@app.get("/open-data/tickets.csv", tags=["open-data"])
+async def od_tickets_csv() -> Response:
+    rows = await db.list_public_tickets()
+    return Response(opendata.to_csv(rows), media_type="text/csv")
 
 
 @app.post("/webhooks/ticket", response_model=Ticket, status_code=201)

@@ -81,6 +81,11 @@ export default function Home() {
               <h3>Baserow (Low-code) →</h3>
               <p>Cơ sở dữ liệu phẳng &amp; biểu mẫu low-code (bật khi cần).</p>
             </a>
+            <a className="card" href={links.openData} target="_blank" rel="noreferrer">
+              <div className="space-badges"><span className="badge d">[D] Data</span></div>
+              <h3>Cổng Dữ liệu mở →</h3>
+              <p>Xuất ticket dạng JSON-LD liên kết &amp; CSV (DCAT, đã ẩn dữ liệu cá nhân).</p>
+            </a>
           </div>
         </div>
       </main>

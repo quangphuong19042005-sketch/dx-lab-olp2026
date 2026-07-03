@@ -30,6 +30,21 @@ async def init_schema() -> None:
         await conn.execute(_DDL)
 
 
+async def list_public_tickets(limit: int = 1000) -> list[dict]:
+    """Danh sách ticket cho dữ liệu mở — KHÔNG gồm PII (tên, SĐT khách hàng)."""
+    async with pool.connection() as conn:
+        conn.row_factory = dict_row
+        cur = await conn.execute(
+            """
+            SELECT id, title, category, priority, status, assignee,
+                   created_at, sla_deadline
+            FROM tickets ORDER BY id LIMIT %s;
+            """,
+            (limit,),
+        )
+        return await cur.fetchall()
+
+
 async def insert_ticket(
     data: dict, assignee: str, priority: str, deadline: datetime
 ) -> dict:

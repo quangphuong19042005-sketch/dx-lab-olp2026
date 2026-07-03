@@ -28,7 +28,7 @@ Kiến trúc hệ thống & ảnh demo: xem [docs/kien-truc.md](docs/kien-truc.m
 |-----------|-----------|-------------------|--------------------|
 | **[H] Human** | SSO, cổng thông tin nội bộ | Keycloak | **DX-Portal** (Next.js) |
 | **[P] Process** | Biểu mẫu, Poka-yoke, phân công/SLA tự động | Baserow | **DX-Core** (trục sự kiện) |
-| **[D] Data** | Nguồn sự thật duy nhất, dashboard thời gian thực | PostgreSQL · Metabase | — |
+| **[D] Data** | Nguồn sự thật duy nhất, dashboard, dữ liệu mở liên kết | PostgreSQL · Metabase | **Open-Data API** (JSON-LD/DCAT) |
 | **[I] Intelligence** | RAG chống ảo giác | Qdrant · Gemini API / Ollama | **DX-RAG** |
 
 Thành phần đặc thù: **DX-Diag** — công cụ chẩn đoán độ trưởng thành số HPDI (DTI).

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dxlab.opendata.vn/schemas/ticket.schema.json",
+  "title": "DX-Ticket (dữ liệu mở, đã ẩn thông tin cá nhân)",
+  "type": "object",
+  "required": ["id", "title", "category", "priority", "status", "assignee", "created_at"],
+  "properties": {
+    "id": { "type": "integer", "description": "Mã ticket" },
+    "title": { "type": "string", "description": "Tiêu đề yêu cầu" },
+    "category": { "type": "string", "enum": ["ky_thuat", "thanh_toan", "khac"] },
+    "priority": { "type": "string", "enum": ["cao", "trung_binh", "thap"] },
+    "status": { "type": "string", "enum": ["moi", "dang_xu_ly", "hoan_thanh", "da_huy"] },
+    "assignee": { "type": "string", "description": "Tổ/nhóm xử lý" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "sla_deadline": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}
