@@ -6,6 +6,12 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 
 ## [Unreleased]
 
+### Fixed
+- **dx-portal:** form ticket báo nhầm "Không kết nối được DX-Core" dù đã gửi thành công.
+  Nguyên nhân: `e.currentTarget` bị null sau `await` (React), khiến `reset()` ném lỗi
+  và rơi vào nhánh catch. Sửa: lưu tham chiếu form trước `await`. Đã kiểm chứng bằng
+  trình duyệt thật (Chrome headless): ticket hợp lệ hiện khung xanh, SĐT sai hiện Poka-yoke.
+
 ## [0.3.0] - 2026-07-03
 
 ### Added

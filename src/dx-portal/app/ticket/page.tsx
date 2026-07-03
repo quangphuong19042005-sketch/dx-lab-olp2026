@@ -13,9 +13,11 @@ export default function TicketForm() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // Lưu tham chiếu form TRƯỚC await: sau await, e.currentTarget sẽ là null (React).
+    const form = e.currentTarget;
     setLoading(true);
     setResult(null);
-    const fd = new FormData(e.currentTarget);
+    const fd = new FormData(form);
     const payload: Record<string, string> = {
       title: String(fd.get("title") || ""),
       description: String(fd.get("description") || ""),
@@ -38,7 +40,7 @@ export default function TicketForm() {
           ok: true, id: data.id, assignee: data.assignee,
           priority: data.priority, sla: data.sla_deadline,
         });
-        e.currentTarget.reset();
+        form.reset();
       } else {
         setResult({ ok: false, message: data.message || "Dữ liệu không hợp lệ." });
       }

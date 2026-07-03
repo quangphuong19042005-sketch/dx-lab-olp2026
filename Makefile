@@ -21,6 +21,12 @@ logs: ## Xem log realtime
 ps: ## Trạng thái các service
 	docker compose ps
 
+status: ## Kiểm tra sức khỏe toàn stack (chạy trước khi test)
+	@printf "portal   :3000  HTTP %s\n" "$$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/)"
+	@printf "dx-core  :8000  HTTP %s\n" "$$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/health)"
+	@printf "metabase :3001  HTTP %s\n" "$$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3001/api/health)"
+	@printf "keycloak :8080  HTTP %s\n" "$$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/realms/dxlab)"
+
 restart: ## Khởi động lại
 	docker compose restart
 
