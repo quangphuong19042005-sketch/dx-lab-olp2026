@@ -7,6 +7,8 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 ## [Unreleased]
 
 ### Added
+- **Nút "Nạp lại tri thức"** trong trang Trợ lý AI: bấm 1 lần để DX-RAG nạp lại tài liệu
+  từ kho P.A.R.A (Nextcloud) — không cần dùng terminal. Có bảo vệ session.
 - **[H] Nextcloud — lưu trữ tài liệu P.A.R.A**, tích hợp sống với DX-RAG: SOP lưu trên
   Nextcloud (thư mục 3-Resources), **DX-RAG nạp tri thức trực tiếp qua WebDAV** (fallback
   thư mục cục bộ). Thêm tài liệu mới trên Nextcloud → re-ingest → trợ lý AI trả lời được

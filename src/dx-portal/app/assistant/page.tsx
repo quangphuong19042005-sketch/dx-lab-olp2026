@@ -15,6 +15,26 @@ export default function Assistant() {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(false);
+  const [reindexing, setReindexing] = useState(false);
+  const [reindexMsg, setReindexMsg] = useState<string | null>(null);
+
+  async function reindex() {
+    setReindexing(true);
+    setReindexMsg(null);
+    try {
+      const res = await fetch("/api/reindex", { method: "POST" });
+      const d = await res.json();
+      setReindexMsg(
+        d.error
+          ? d.error
+          : `✅ Đã nạp ${d.ingested ?? 0} đoạn từ ${d.files ?? 0} tài liệu (nguồn: ${d.source ?? "?"}).`
+      );
+    } catch {
+      setReindexMsg("Không kết nối được trợ lý.");
+    } finally {
+      setReindexing(false);
+    }
+  }
 
   async function ask(question: string) {
     if (!question.trim() || loading) return;
@@ -45,11 +65,27 @@ export default function Assistant() {
       <div className="container" style={{ paddingTop: 30 }}>
         <Link className="link-back" href="/">← Về trang chủ</Link>
         <div className="panel" style={{ maxWidth: 720 }}>
-          <h2>Trợ lý AI nội bộ</h2>
-          <p className="sub">
-            Hỏi đáp dựa trên tài liệu &amp; quy trình nội bộ. Trợ lý chỉ trả lời theo tri thức
-            đã nạp (chống bịa đặt).
-          </p>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+            <div>
+              <h2>Trợ lý AI nội bộ</h2>
+              <p className="sub">
+                Hỏi đáp dựa trên tài liệu &amp; quy trình nội bộ. Trợ lý chỉ trả lời theo tri thức
+                đã nạp (chống bịa đặt).
+              </p>
+            </div>
+            <button
+              onClick={reindex}
+              disabled={reindexing}
+              title="Nạp lại tri thức từ kho tài liệu P.A.R.A (Nextcloud)"
+              style={{
+                whiteSpace: "nowrap", background: "#f1f5f9", border: "1px solid var(--line)",
+                borderRadius: 10, padding: "8px 14px", fontSize: 13, cursor: "pointer", color: "var(--ink)",
+              }}
+            >
+              {reindexing ? "Đang nạp…" : "🔄 Nạp lại tri thức"}
+            </button>
+          </div>
+          {reindexMsg && <div className="alert ok" style={{ marginBottom: 14 }}>{reindexMsg}</div>}
 
           {msgs.length === 0 && (
             <div style={{ marginBottom: 16 }}>
