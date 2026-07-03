@@ -46,3 +46,6 @@ Thumbs.db
 # === Logs ===
 *.log
 logs/
+
+# Next.js auto-generated
+src/dx-portal/next-env.d.ts
