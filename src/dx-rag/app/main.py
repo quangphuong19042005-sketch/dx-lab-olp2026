@@ -4,7 +4,9 @@
 Luồng /ask: nhúng câu hỏi → tìm top-k đoạn liên quan trong Qdrant →
 ghép ngữ cảnh → yêu cầu LLM CHỈ trả lời theo ngữ cảnh (không bịa).
 """
+import asyncio
 import logging
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from . import llm, store
@@ -12,7 +14,29 @@ from .config import settings
 from .ingest import ingest
 
 logging.basicConfig(level=logging.INFO)
-app = FastAPI(title="DX-RAG — Trợ lý AI nội bộ", version="0.4.0")
+log = logging.getLogger("dx-rag")
+
+
+async def _auto_ingest() -> None:
+    """Tự nạp tri thức nếu kho trống — chạy nền, bỏ qua nếu LLM chưa sẵn sàng."""
+    try:
+        if await store.count() == 0:
+            log.info("Kho tri thức trống — tự động nạp...")
+            res = await ingest()
+            log.info("Auto-ingest xong: %s", res)
+        else:
+            log.info("Kho tri thức đã có dữ liệu, bỏ qua auto-ingest.")
+    except Exception as exc:  # không để lỗi nạp làm sập service
+        log.warning("Auto-ingest thất bại (sẽ nạp lại qua POST /ingest): %s", exc)
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    asyncio.create_task(_auto_ingest())
+    yield
+
+
+app = FastAPI(title="DX-RAG — Trợ lý AI nội bộ", version="0.4.0", lifespan=lifespan)
 
 _PROMPT = """Bạn là trợ lý nội bộ của doanh nghiệp. CHỈ trả lời dựa trên NGỮ CẢNH dưới đây.
 Nếu ngữ cảnh không chứa thông tin để trả lời, hãy nói đúng câu: "Xin lỗi, tôi không tìm thấy thông tin này trong tài liệu nội bộ." Tuyệt đối không bịa đặt.
