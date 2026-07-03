@@ -1,0 +1,38 @@
+{
+  "realm": "dxlab",
+  "enabled": true,
+  "displayName": "DX-Lab OSS",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "clients": [
+    {
+      "clientId": "dx-portal",
+      "name": "DX-Portal (Cổng thông tin nội bộ)",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "redirectUris": ["http://localhost:3000/*"],
+      "webOrigins": ["http://localhost:3000"]
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "nhan-vien", "description": "Nhân sự vận hành [H]" },
+      { "name": "quan-ly", "description": "Ban lãnh đạo / quản lý [D]" },
+      { "name": "quan-tri", "description": "Quản trị hệ thống" }
+    ]
+  },
+  "users": [
+    {
+      "username": "demo",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "demo@dxlab.local",
+      "firstName": "Demo",
+      "lastName": "User",
+      "credentials": [{ "type": "password", "value": "demo", "temporary": false }],
+      "realmRoles": ["nhan-vien"]
+    }
+  ]
+}

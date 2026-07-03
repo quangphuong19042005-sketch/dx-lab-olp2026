@@ -1,0 +1,48 @@
+# === Môi trường & bí mật ===
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# === Python (dx-core, dx-rag) ===
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# === Node / Next.js (dx-portal, dx-diag) ===
+node_modules/
+.next/
+out/
+.turbo/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# === Dữ liệu runtime của các nền tảng (KHÔNG commit) ===
+data/
+volumes/
+*.sqlite
+*.db
+postgres-data/
+keycloak-data/
+baserow-data/
+metabase-data/
+
+# === IDE / OS ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+logs/
