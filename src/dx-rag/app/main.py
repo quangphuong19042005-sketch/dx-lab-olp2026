@@ -65,7 +65,11 @@ async def health() -> dict:
 
 @app.post("/ingest")
 async def do_ingest() -> dict:
-    return await ingest()
+    try:
+        return await ingest()
+    except Exception as exc:  # lỗi mạng/quota LLM → báo lỗi mềm, không 500 thô
+        log.warning("Ingest thất bại: %s", exc)
+        return {"ingested": 0, "error": "Không nạp được tri thức (LLM/nguồn tạm lỗi). Thử lại sau."}
 
 
 @app.post("/ask", response_model=AskOut)

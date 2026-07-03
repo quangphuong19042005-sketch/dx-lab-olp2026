@@ -71,6 +71,11 @@ export default function Home() {
               <h3>Định danh & SSO →</h3>
               <p>Quản trị tài khoản tập trung, đăng nhập một lần (Keycloak).</p>
             </a>
+            <a className="card" href={links.nextcloud} target="_blank" rel="noreferrer">
+              <div className="space-badges"><span className="badge h">[H] Human</span></div>
+              <h3>Kho tài liệu P.A.R.A →</h3>
+              <p>Lưu trữ SOP/tri thức chuẩn P.A.R.A (Nextcloud) — nguồn cho trợ lý AI.</p>
+            </a>
             <a className="card" href={links.dxCoreDocs} target="_blank" rel="noreferrer">
               <div className="space-badges"><span className="badge p">[P] Process</span></div>
               <h3>DX-Core API →</h3>

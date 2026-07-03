@@ -12,6 +12,7 @@ chính thức (upstream) kèm file cấu hình bên ngoài.
 | Thành phần | Phiên bản | Vai trò trong DX-Lab | Giấy phép | OSI |
 |-----------|-----------|----------------------|-----------|-----|
 | Keycloak | 26.0 | [H] Định danh / SSO (OIDC) | Apache-2.0 | ✅ |
+| Nextcloud | 30 | [H] Lưu trữ tài liệu P.A.R.A (nguồn tri thức cho DX-RAG) | AGPL-3.0 | ✅ |
 | PostgreSQL | 16 | [D] Nguồn sự thật duy nhất | PostgreSQL License | ✅ |
 | Metabase | v0.51.8 | [D] BI Dashboard | AGPL-3.0 | ✅ |
 | Qdrant | v1.12.4 | [I] Cơ sở dữ liệu véc-tơ | Apache-2.0 | ✅ |
@@ -24,9 +25,8 @@ Next.js, next-auth, React (MIT) · FastAPI, httpx, psycopg, pydantic (MIT/BSD/Ap
 ## Lộ trình mở rộng (CHƯA triển khai — định hướng kiến trúc)
 
 Các thành phần dưới đây nằm trong bản thiết kế (xem [docs/du-an.md](docs/du-an.md)) nhưng **chưa
-được tích hợp** vào bản hiện tại: **Nextcloud** (AGPL-3.0, lưu trữ P.A.R.A), **Rocket.Chat**
-(MIT, giao tiếp), **BookStack** (MIT, wiki/SOP), **Node-RED** (Apache-2.0, automation trực quan).
-Tất cả đều OSI-approved, sẽ bổ sung ở các phiên bản sau.
+được tích hợp** vào bản hiện tại: **Rocket.Chat** (MIT, giao tiếp), **BookStack** (MIT, wiki/SOP),
+**Node-RED** (Apache-2.0, automation trực quan). Tất cả đều OSI-approved, sẽ bổ sung ở các phiên bản sau.
 
 ## Lưu ý về lựa chọn giấy phép
 

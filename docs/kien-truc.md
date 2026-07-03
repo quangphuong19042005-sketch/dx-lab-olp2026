@@ -14,14 +14,14 @@ vào **DX-Portal** — nguồn sự thật duy nhất — rồi thao tác trên 
 
 | Không gian | Vai trò | Thành phần |
 |-----------|---------|-----------|
-| **[H] Human** | Định danh tập trung (SSO), cổng thông tin nội bộ | Keycloak · **DX-Portal** (tự viết) |
+| **[H] Human** | SSO, cổng thông tin, lưu trữ tài liệu P.A.R.A | Keycloak · Nextcloud · **DX-Portal** (tự viết) |
 | **[P] Process** | Biểu mẫu, rào chắn Poka-yoke, phân công & SLA tự động | **DX-Core** (tự viết) · Baserow |
 | **[D] Data** | Nguồn sự thật duy nhất, dashboard, **dữ liệu mở liên kết (JSON-LD/DCAT)** | PostgreSQL · Metabase · **DX-Core Open-Data** (tự viết) |
 | **[I] Intelligence** | Trợ lý AI bám tri thức nội bộ, chống ảo giác | **DX-RAG** (tự viết) · Qdrant · Gemini API/Ollama |
 
 Thành phần đặc thù: **DX-Diag** — chẩn đoán độ trưởng thành HPDI (biểu đồ radar + khuyến nghị).
 
-> **Lộ trình mở rộng (chưa triển khai):** Nextcloud (lưu trữ P.A.R.A), Rocket.Chat (giao tiếp),
+> **Lộ trình mở rộng (chưa triển khai):** Rocket.Chat (giao tiếp nội bộ),
 > Node-RED (automation trực quan) — đã có trong thiết kế, sẽ bổ sung ở phiên bản sau.
 
 ---
@@ -136,6 +136,7 @@ sequenceDiagram
 | DX-RAG | 8001 | FastAPI + Qdrant + Gemini/Ollama | MIT | ✅ |
 | DX-Diag | (trong Portal) | React (SVG radar) | MIT | ✅ |
 | Keycloak | 8080 | Java | Apache-2.0 | |
+| Nextcloud | 8090 | PHP | AGPL-3.0 | |
 | PostgreSQL | 5432 | C | PostgreSQL License | |
 | Metabase | 3001 | Clojure/Java | AGPL-3.0 | |
 | Qdrant | 6333 | Rust | Apache-2.0 | |

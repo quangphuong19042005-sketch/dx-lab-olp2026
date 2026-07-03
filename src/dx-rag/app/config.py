@@ -22,5 +22,11 @@ class Settings(BaseSettings):
     qdrant_host: str = "http://qdrant:6333"
     collection: str = "dx_knowledge"
 
+    # [H] Nextcloud — nguồn tài liệu tri thức (WebDAV). Trống → dùng thư mục cục bộ.
+    nextcloud_url: str = ""
+    nextcloud_user: str = ""
+    nextcloud_password: str = ""
+    nextcloud_knowledge_path: str = "DX-Lab/3-Resources"
+
 
 settings = Settings()

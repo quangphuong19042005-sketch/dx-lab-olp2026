@@ -7,6 +7,16 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 ## [Unreleased]
 
 ### Added
+- **[H] Nextcloud — lưu trữ tài liệu P.A.R.A**, tích hợp sống với DX-RAG: SOP lưu trên
+  Nextcloud (thư mục 3-Resources), **DX-RAG nạp tri thức trực tiếp qua WebDAV** (fallback
+  thư mục cục bộ). Thêm tài liệu mới trên Nextcloud → re-ingest → trợ lý AI trả lời được
+  ngay. Script `scripts/seed_nextcloud.sh`; thẻ "Kho tài liệu P.A.R.A" trong DX-Portal.
+
+### Security
+- **Khóa Gemini truyền qua header** `x-goog-api-key` thay vì query param → không còn lộ
+  key trong log/thông báo lỗi. Thêm retry cho lỗi 5xx tạm thời của Gemini; `/ingest` bọc lỗi.
+
+### Added (tiếp)
 - **Dữ liệu mở liên kết [D]** (kế thừa OLP 2025) — DX-Core xuất ticket ra JSON-LD
   (`@context` ánh xạ schema.org), CSV, và danh mục DCAT (W3C); **ẩn PII** (tên/SĐT).
   Endpoint `/open-data/*`; lược đồ `schemas/ticket.schema.json` + `schemas/dx-context.jsonld`
