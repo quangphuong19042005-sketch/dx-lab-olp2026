@@ -41,6 +41,16 @@ export default function Home() {
               <h3>Bảng điều khiển vận hành →</h3>
               <p>Giám sát SLA, tồn đọng, hiệu suất theo thời gian thực (Metabase).</p>
             </a>
+
+            <Link className="card" href="/diag">
+              <span className="tag">Chẩn đoán</span>
+              <div className="space-badges">
+                <span className="badge h">H</span><span className="badge p">P</span>
+                <span className="badge d">D</span><span className="badge i">I</span>
+              </div>
+              <h3>Chẩn đoán trưởng thành số →</h3>
+              <p>Tự "bắt mạch" tổ chức theo mô hình HPDI, nhận biểu đồ radar &amp; khuyến nghị.</p>
+            </Link>
           </div>
 
           <div className="section-title">Công cụ hệ thống</div>

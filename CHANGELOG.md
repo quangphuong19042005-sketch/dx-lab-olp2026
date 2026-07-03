@@ -6,6 +6,12 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 
 ## [Unreleased]
 
+### Added
+- **DX-Diag — Chẩn đoán độ trưởng thành HPDI** (route `/diag` trong dx-portal):
+  khảo sát 12 câu trên 4 trục H-P-D-I, thuật toán chấm điểm, biểu đồ radar (SVG thuần)
+  và khuyến nghị trục cần ưu tiên theo nguyên lý tiến hóa tuyến tính. Kiểm chứng bằng
+  Chrome headless. Đây là artifact khác biệt hóa đặc thù của cuộc thi.
+
 ### Fixed
 - **dx-portal:** form ticket báo nhầm "Không kết nối được DX-Core" dù đã gửi thành công.
   Nguyên nhân: `e.currentTarget` bị null sau `await` (React), khiến `reset()` ném lỗi
