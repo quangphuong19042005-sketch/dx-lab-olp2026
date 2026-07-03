@@ -7,6 +7,12 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 ## [Unreleased]
 
 ### Added
+- **[D] Metabase Dashboard (G2)** — BI đọc dữ liệu ticket từ PostgreSQL (SSOT):
+  dashboard "DX-Ticket" với 7 biểu đồ (tổng ticket, quá hạn SLA, tỷ lệ hoàn thành,
+  theo loại/trạng thái/ưu tiên, xu hướng theo ngày).
+- Script `scripts/metabase_setup.py` tự động cấu hình Metabase (admin, kết nối DB, dashboard).
+- Dữ liệu mẫu `seed/seed_tickets.sql` (40 ticket đa dạng, phân bố đều).
+- Service `metabase` + init DB `metabase` trong docker-compose.
 - **DX-Core (G1)** — trục trung gian hướng sự kiện (FastAPI): tiếp nhận ticket qua
   webhook, rào chắn Poka-yoke (xác thực SĐT), rule engine (suy luận ưu tiên, phân công,
   tính SLA), ghi PostgreSQL (SSOT), cảnh báo Telegram.

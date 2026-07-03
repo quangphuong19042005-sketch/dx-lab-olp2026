@@ -94,6 +94,27 @@ services:
     networks:
       - dxlab
 
+  # --- [D] Metabase — BI Dashboard (đọc dữ liệu, không đổi gốc) ---
+  metabase:
+    image: metabase/metabase:v0.51.8
+    container_name: dxlab-metabase
+    restart: unless-stopped
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_DB_HOST: postgres
+      MB_DB_USER: ${POSTGRES_USER}
+      MB_DB_PASS: ${POSTGRES_PASSWORD}
+      TZ: ${TZ}
+    ports:
+      - "${METABASE_PORT}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - dxlab
+
 volumes:
   postgres-data:
   baserow-data:
