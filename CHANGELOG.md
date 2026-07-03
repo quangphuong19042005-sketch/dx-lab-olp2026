@@ -7,6 +7,11 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 ## [Unreleased]
 
 ### Added
+- **DX-Core (G1)** — trục trung gian hướng sự kiện (FastAPI): tiếp nhận ticket qua
+  webhook, rào chắn Poka-yoke (xác thực SĐT), rule engine (suy luận ưu tiên, phân công,
+  tính SLA), ghi PostgreSQL (SSOT), cảnh báo Telegram.
+- 11 unit test cho rule engine + Poka-yoke (pass).
+- Dockerfile cho dx-core; thêm service `dx-core` và `baserow` vào docker-compose.
 - Khởi tạo nền móng dự án (Giai đoạn G0): cây thư mục, bộ tài liệu nguồn mở.
 - Giấy phép MIT + `.gitignore`, `.dockerignore`, `.env.example`.
 - Tài liệu định hướng dự án `docs/du-an.md` và bộ giáo trình DX-OS trong `docs/dx-os/`.
