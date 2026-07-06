@@ -3,6 +3,60 @@ import Link from "next/link";
 import { links } from "./links";
 import { UserMenu } from "./UserMenu";
 
+type Space = "h" | "p" | "d" | "i" | "hpdi";
+interface CardItem {
+  icon: string; space: Space; badge: React.ReactNode;
+  title: string; desc: string; href: string; external?: boolean;
+}
+
+const badge = (s: Exclude<Space, "hpdi">, label: string) => (
+  <span className={`badge ${s}`}>{label}</span>
+);
+
+const nghiepVu: CardItem[] = [
+  { icon: "🎫", space: "p", badge: badge("p", "[P] Process"), href: "/ticket",
+    title: "Gửi yêu cầu / Ticket", desc: "Tiếp nhận yêu cầu khách hàng với rào chắn chống nhập sai (Poka-yoke)." },
+  { icon: "📊", space: "d", badge: badge("d", "[D] Data"), href: links.metabase, external: true,
+    title: "Bảng điều khiển vận hành", desc: "Giám sát SLA, tồn đọng, hiệu suất theo thời gian thực (Metabase)." },
+  { icon: "🧭", space: "hpdi", href: "/diag",
+    badge: (<span className="space-badges"><span className="badge h">H</span><span className="badge p">P</span><span className="badge d">D</span><span className="badge i">I</span></span>),
+    title: "Chẩn đoán trưởng thành số", desc: 'Tự "bắt mạch" tổ chức theo mô hình HPDI, nhận biểu đồ radar & khuyến nghị.' },
+  { icon: "🤖", space: "i", badge: badge("i", "[I] Intelligence"), href: "/assistant",
+    title: "Trợ lý AI nội bộ", desc: "Hỏi đáp quy trình, chính sách — trả lời bám tài liệu nội bộ, không bịa." },
+];
+
+const congCu: CardItem[] = [
+  { icon: "🔐", space: "h", badge: badge("h", "[H] Human"), href: links.keycloak, external: true,
+    title: "Định danh & SSO", desc: "Quản trị tài khoản tập trung, đăng nhập một lần (Keycloak)." },
+  { icon: "📁", space: "h", badge: badge("h", "[H] Human"), href: links.nextcloud, external: true,
+    title: "Kho tài liệu P.A.R.A", desc: "Lưu trữ SOP/tri thức chuẩn P.A.R.A (Nextcloud) — nguồn cho trợ lý AI." },
+  { icon: "⚙️", space: "p", badge: badge("p", "[P] Process"), href: links.dxCoreDocs, external: true,
+    title: "DX-Core API", desc: "Trục trung gian hướng sự kiện: chuẩn hóa, phân công, cảnh báo." },
+  { icon: "🗃️", space: "p", badge: badge("p", "[P] Process"), href: links.baserow, external: true,
+    title: "Baserow (Low-code)", desc: "Cơ sở dữ liệu phẳng & biểu mẫu low-code (bật khi cần)." },
+  { icon: "🔗", space: "d", badge: badge("d", "[D] Data"), href: links.openData, external: true,
+    title: "Cổng Dữ liệu mở", desc: "Xuất ticket dạng JSON-LD liên kết & CSV (DCAT, đã ẩn dữ liệu cá nhân)." },
+];
+
+function Card({ item }: { item: CardItem }) {
+  const inner = (
+    <>
+      <div className="card-top">
+        <div className="card-icon">{item.icon}</div>
+        {item.badge}
+      </div>
+      <h3>{item.title} →</h3>
+      <p>{item.desc}</p>
+    </>
+  );
+  const cls = `card ${item.space}`;
+  return item.external ? (
+    <a className={cls} href={item.href} target="_blank" rel="noreferrer">{inner}</a>
+  ) : (
+    <Link className={cls} href={item.href}>{inner}</Link>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -24,6 +78,12 @@ export default function Home() {
               Một cửa ngõ duy nhất cho mọi nghiệp vụ, dữ liệu và công cụ — vận hành
               trên nền tảng 100% mã nguồn mở theo kiến trúc H-P-D-I.
             </p>
+            <div className="hpdi-pills">
+              <span className="hpdi-pill"><span className="dot" /> [H] Con người</span>
+              <span className="hpdi-pill"><span className="dot" /> [P] Quy trình</span>
+              <span className="hpdi-pill"><span className="dot" /> [D] Dữ liệu</span>
+              <span className="hpdi-pill"><span className="dot" /> [I] Trí tuệ</span>
+            </div>
           </div>
         </div>
       </header>
@@ -32,65 +92,12 @@ export default function Home() {
         <div className="container">
           <div className="section-title">Nghiệp vụ</div>
           <div className="grid">
-            <Link className="card" href="/ticket">
-              <span className="tag">Biểu mẫu</span>
-              <div className="space-badges"><span className="badge p">[P] Process</span></div>
-              <h3>Gửi yêu cầu / Ticket →</h3>
-              <p>Tiếp nhận yêu cầu khách hàng với rào chắn chống nhập sai (Poka-yoke).</p>
-            </Link>
-
-            <a className="card" href={links.metabase} target="_blank" rel="noreferrer">
-              <span className="tag">Dashboard</span>
-              <div className="space-badges"><span className="badge d">[D] Data</span></div>
-              <h3>Bảng điều khiển vận hành →</h3>
-              <p>Giám sát SLA, tồn đọng, hiệu suất theo thời gian thực (Metabase).</p>
-            </a>
-
-            <Link className="card" href="/diag">
-              <span className="tag">Chẩn đoán</span>
-              <div className="space-badges">
-                <span className="badge h">H</span><span className="badge p">P</span>
-                <span className="badge d">D</span><span className="badge i">I</span>
-              </div>
-              <h3>Chẩn đoán trưởng thành số →</h3>
-              <p>Tự "bắt mạch" tổ chức theo mô hình HPDI, nhận biểu đồ radar &amp; khuyến nghị.</p>
-            </Link>
-
-            <Link className="card" href="/assistant">
-              <span className="tag">Trợ lý AI</span>
-              <div className="space-badges"><span className="badge i">[I] Intelligence</span></div>
-              <h3>Trợ lý AI nội bộ →</h3>
-              <p>Hỏi đáp quy trình, chính sách — trả lời bám tài liệu nội bộ, không bịa.</p>
-            </Link>
+            {nghiepVu.map((it) => <Card key={it.title} item={it} />)}
           </div>
 
           <div className="section-title">Công cụ hệ thống</div>
           <div className="grid">
-            <a className="card" href={links.keycloak} target="_blank" rel="noreferrer">
-              <div className="space-badges"><span className="badge h">[H] Human</span></div>
-              <h3>Định danh & SSO →</h3>
-              <p>Quản trị tài khoản tập trung, đăng nhập một lần (Keycloak).</p>
-            </a>
-            <a className="card" href={links.nextcloud} target="_blank" rel="noreferrer">
-              <div className="space-badges"><span className="badge h">[H] Human</span></div>
-              <h3>Kho tài liệu P.A.R.A →</h3>
-              <p>Lưu trữ SOP/tri thức chuẩn P.A.R.A (Nextcloud) — nguồn cho trợ lý AI.</p>
-            </a>
-            <a className="card" href={links.dxCoreDocs} target="_blank" rel="noreferrer">
-              <div className="space-badges"><span className="badge p">[P] Process</span></div>
-              <h3>DX-Core API →</h3>
-              <p>Trục trung gian hướng sự kiện: chuẩn hóa, phân công, cảnh báo.</p>
-            </a>
-            <a className="card" href={links.baserow} target="_blank" rel="noreferrer">
-              <div className="space-badges"><span className="badge p">[P] Process</span></div>
-              <h3>Baserow (Low-code) →</h3>
-              <p>Cơ sở dữ liệu phẳng &amp; biểu mẫu low-code (bật khi cần).</p>
-            </a>
-            <a className="card" href={links.openData} target="_blank" rel="noreferrer">
-              <div className="space-badges"><span className="badge d">[D] Data</span></div>
-              <h3>Cổng Dữ liệu mở →</h3>
-              <p>Xuất ticket dạng JSON-LD liên kết &amp; CSV (DCAT, đã ẩn dữ liệu cá nhân).</p>
-            </a>
+            {congCu.map((it) => <Card key={it.title} item={it} />)}
           </div>
         </div>
       </main>

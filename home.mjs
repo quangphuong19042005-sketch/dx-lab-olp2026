@@ -1,0 +1,12 @@
+import puppeteer from "puppeteer-core";
+const b = await puppeteer.launch({ executablePath:"/usr/bin/google-chrome", headless:"new", args:["--no-sandbox","--disable-setuid-sandbox"], defaultViewport:{width:1280,height:920} });
+const p = await b.newPage();
+await p.goto("http://localhost:3000/", { waitUntil:"networkidle2" });
+const btn = await p.$("form button, button");
+await Promise.all([p.waitForNavigation({waitUntil:"networkidle2"}), btn.click()]);
+await p.waitForSelector("#username"); await p.type("#username","demo"); await p.type("#password","demo");
+await Promise.all([p.waitForNavigation({waitUntil:"networkidle2"}), p.click("#kc-login, input[type=submit]")]);
+await p.waitForSelector(".card"); await new Promise(r=>setTimeout(r,500));
+await p.screenshot({ path:"/home/vanii/Documents/Workspace/olp/dx-lab-olp2026/docs/images/01-portal-home.png" });
+console.log("đã chụp");
+await b.close();
