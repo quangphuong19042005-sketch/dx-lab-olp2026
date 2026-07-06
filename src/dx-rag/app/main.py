@@ -9,17 +9,24 @@ import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-from . import llm, store
+from . import llm, store, webdav
 from .config import settings
-from .ingest import ingest
+from .ingest import ingest, KNOWLEDGE_DIR
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("dx-rag")
 
 
 async def _auto_ingest() -> None:
-    """Tự nạp tri thức nếu kho trống — chạy nền, bỏ qua nếu LLM chưa sẵn sàng."""
+    """Khởi tạo tự động (cho 'một lệnh'): chờ Nextcloud → seed P.A.R.A nếu trống →
+    nạp tri thức nếu kho véc-tơ trống. Chạy nền, không làm sập service nếu lỗi."""
     try:
+        if webdav.is_configured():
+            log.info("Chờ Nextcloud sẵn sàng để khởi tạo kho tri thức P.A.R.A...")
+            if await webdav.wait_ready():
+                await webdav.seed_if_empty(KNOWLEDGE_DIR)
+            else:
+                log.warning("Nextcloud chưa sẵn sàng — sẽ dùng tài liệu cục bộ.")
         if await store.count() == 0:
             log.info("Kho tri thức trống — tự động nạp...")
             res = await ingest()

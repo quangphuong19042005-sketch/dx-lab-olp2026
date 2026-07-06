@@ -7,6 +7,10 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 ## [Unreleased]
 
 ### Added
+- **Tự khởi tạo Nextcloud P.A.R.A khi boot** — DX-RAG tự chờ Nextcloud, tạo cấu trúc
+  P.A.R.A + tải SOP mẫu lên `3-Resources` rồi nạp tri thức. Chỉ cần `docker compose up`
+  (một lệnh), không cần seed thủ công — quan trọng cho vòng chấm "cài từ mã nguồn".
+  Đã kiểm chứng: xóa sạch DX-Lab + collection → restart → tự tạo lại đầy đủ.
 - **Nút "Nạp lại tri thức"** trong trang Trợ lý AI: bấm 1 lần để DX-RAG nạp lại tài liệu
   từ kho P.A.R.A (Nextcloud) — không cần dùng terminal. Có bảo vệ session.
 - **[H] Nextcloud — lưu trữ tài liệu P.A.R.A**, tích hợp sống với DX-RAG: SOP lưu trên

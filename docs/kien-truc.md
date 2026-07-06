@@ -190,6 +190,11 @@ make status                   # kiểm tra sức khỏe
 
 Truy cập DX-Portal tại http://localhost:3000 (đăng nhập `demo` / `demo`).
 
+> **Tự khởi tạo (một lệnh):** khi boot, DX-RAG tự chờ Nextcloud sẵn sàng, tạo cấu trúc
+> P.A.R.A (`DX-Lab/1-Projects…4-Archives`), tải tài liệu SOP mẫu lên `3-Resources` rồi nạp
+> tri thức — **không cần lệnh phụ**. Nếu Nextcloud lỗi, tự dùng tài liệu cục bộ `src/dx-rag/knowledge/`.
+> (`scripts/seed_nextcloud.sh` chỉ dùng khi muốn seed lại thủ công.)
+
 Bật LLM cục bộ thay cho API:
 ```bash
 docker compose --profile local-llm up -d ollama
