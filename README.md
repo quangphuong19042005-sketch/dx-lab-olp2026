@@ -5,6 +5,7 @@
 > Chủ đề: *Xây dựng Hệ điều hành Doanh nghiệp số (DX-OS)* dựa trên kiến trúc Open-Core.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/quangphuong19042005-sketch/dx-lab-olp2026/actions/workflows/ci.yml/badge.svg)](https://github.com/quangphuong19042005-sketch/dx-lab-olp2026/actions/workflows/ci.yml)
 
 DX-Lab OSS tái hiện đầy đủ **4 không gian kiến trúc H-P-D-I** của mô hình DX-OS bằng một
 ngăn xếp **100% phần mềm nguồn mở (OSI-approved)**, triển khai chỉ với **một lệnh**, giúp

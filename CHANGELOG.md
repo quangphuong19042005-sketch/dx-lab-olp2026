@@ -7,6 +7,9 @@ tuân thủ [Semantic Versioning](https://semver.org/lang/vi/).
 ## [Unreleased]
 
 ### Added
+- **Kiểm thử tự động + CI**: thêm test cho cả 4 thành phần tự viết (tổng 22 test) —
+  dx-core (rules + open-data), dx-rag (webdav parse + chunking), dx-portal (chấm điểm HPDI
+  bằng Vitest). GitHub Actions `.github/workflows/ci.yml` chạy test + build mỗi push/PR.
 - **Tự khởi tạo Nextcloud P.A.R.A khi boot** — DX-RAG tự chờ Nextcloud, tạo cấu trúc
   P.A.R.A + tải SOP mẫu lên `3-Resources` rồi nạp tri thức. Chỉ cần `docker compose up`
   (một lệnh), không cần seed thủ công — quan trọng cho vòng chấm "cài từ mã nguồn".

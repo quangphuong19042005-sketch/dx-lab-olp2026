@@ -64,20 +64,24 @@ async def seed_if_empty(local_dir: str) -> bool:
     return True
 
 
-async def list_markdown() -> list[str]:
-    """Liệt kê đường dẫn file .md trong thư mục tri thức (PROPFIND, Depth 1)."""
-    url = f"{_base()}/{settings.nextcloud_knowledge_path.strip('/')}/"
-    auth = (settings.nextcloud_user, settings.nextcloud_password)
-    async with httpx.AsyncClient(timeout=30, auth=auth) as c:
-        r = await c.request("PROPFIND", url, headers={"Depth": "1"})
-        r.raise_for_status()
-    root = ET.fromstring(r.text)
+def parse_markdown_hrefs(xml_text: str) -> list[str]:
+    """Trích các đường dẫn .md từ phản hồi PROPFIND (thuần, dễ unit test)."""
+    root = ET.fromstring(xml_text)
     hrefs = []
     for href in root.iter("{DAV:}href"):
         path = unquote(href.text or "")
         if path.lower().endswith(".md"):
             hrefs.append(path)
     return hrefs
+
+
+async def list_markdown() -> list[str]:
+    """Liệt kê đường dẫn file .md trong thư mục tri thức (PROPFIND, Depth 1)."""
+    url = f"{_base()}/{settings.nextcloud_knowledge_path.strip('/')}/"
+    async with httpx.AsyncClient(timeout=30, auth=_auth()) as c:
+        r = await c.request("PROPFIND", url, headers={"Depth": "1"})
+        r.raise_for_status()
+    return parse_markdown_hrefs(r.text)
 
 
 async def fetch(href: str) -> tuple[str, str]:
